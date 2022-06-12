@@ -11,14 +11,15 @@ CYAN='033[0;36m'
 LIGHT='033[0;37m'
 # ==========================================
 # Getting
-MYIP=$(wget -qO- ipinfo.ioip);
+MYIP=$(wget -qO- ipinfo.io/ip);
 # ==================================================
 # Link Hosting Kalian
+
 luminevpn=raw.githubusercontent.companjikusumo7meksvpamainssh
 
 # disable ipv6
-echo 1  procsysnetipv6confalldisable_ipv6
-sed -i '$ iecho 1  procsysnetipv6confalldisable_ipv6' etcrc.local
+echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
+sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
 
 #update
 apt update -y
@@ -75,8 +76,8 @@ chmod +x cekvmess
 chmod +x cektrojan
 chmod +x renewvmess
 chmod +x renewtrojan
-echo 0 5    root clearlog && reboot  etccrontab
-echo 0 0    root xp  etccrontab
+echo "0 5 * * * root clearlog && reboot" >> /etc/crontab
+echo "0 0 * * * root xp" >> /etc/crontab
 # remove unnecessary files
 cd
 apt autoclean -y
