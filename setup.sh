@@ -81,7 +81,6 @@ chmod +x renewvmess
 chmod +x renewtrojan
 echo 0 5    root clearlog && reboot  etccrontab
 echo 0 0    root xp  etccrontab
-echo ${domain}  varlibluminedomain
 # remove unnecessary files
 cd
 apt autoclean -y
