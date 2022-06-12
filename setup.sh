@@ -16,10 +16,6 @@ MYIP=$(wget -qO- ipinfo.ioip);
 # Link Hosting Kalian
 luminevpn=raw.githubusercontent.companjikusumo7meksvpamainssh
 
-#domain ganti manual
-
-domain=m.ucxplus.com
-
 # disable ipv6
 echo 1  procsysnetipv6confalldisable_ipv6
 sed -i '$ iecho 1  procsysnetipv6confalldisable_ipv6' etcrc.local
