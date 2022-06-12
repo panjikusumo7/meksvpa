@@ -16,12 +16,12 @@ data=( `cat /etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json | grep '^###'
 now=`date +"%Y-%m-%d"`
 for user in "${data[@]}"
 do
-exp=$(grep -w "^#&# $user" "/etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json" | cut -d ' ' -f 3)
+exp=$(grep -w "^### $user" "/etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json" | cut -d ' ' -f 3)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
 if [[ "$exp2" = "0" ]]; then
-sed -i "/^#&# $user $exp/,/^},{/d" /etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json
 fi
 done
 systemctl restart xray.service
@@ -34,7 +34,6 @@ d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
 if [[ "$exp2" = "0" ]]; then
-sed -i "/^### $user $exp/,/^},{/d" /etc/v2ray-agent/xray/conf/05_VMess_WS_inbounds.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/v2ray-agent/xray/conf/05_VMess_WS_inbounds.json
 rm -f /etc/v2ray-agent/xray/conf/vmess-$user-tls.json /etc/v2ray-agent/xray/conf/vmess-$user-cdn.json
 fi
