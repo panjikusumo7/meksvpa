@@ -48,22 +48,22 @@ cat>/etc/v2ray-agent/xray/conf/vmess-$user-tls.json<<EOF
 }
 EOF
 cat>/etc/v2ray-agent/xray/conf/vmess-$user-cdn.json<<EOF
-{"v":"2","ps":"${user}","add":"www.digitalocean.com","aid":"0","port":"443","type":"none","net":"ws","path":"/luminemyid","host":"${domain}","id":"${uuid}","tls":"tls"}
+      {"v":"2","ps":"${user}","add":"www.digitalocean.com","aid":"0","port":"443","type":"none","net":"ws","path":"/luminemyid","host":"${domain}","id":"${uuid}","tls":"tls"}
 EOF
 vmess_base641=$( base64 -w 0 <<< $vmess_json1)
 vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 xrayv2ray1="vmess://$(base64 -w 0 /etc/v2ray-agent/xray/conf/vmess-$user-tls.json)"
 xrayv2ray2="vmess://$(base64 -w 0 /etc/v2ray-agent/xray/conf/vmess-$user-cdn.json)"
 rm -rf /etc/v2ray-agent/xray/conf/vmess-$user-tls.json
-rm -rf /etc/xray/vmess-$user-cdn.json
+rm -rf /etc/v2ray-agent/xray/conf/vmess-$user-cdn.json
 systemctl restart xray.service
 service cron restart
 clear
 echo -e ""
 echo -e "======-XRAY Vmess Account-======"
-echo -e "Username    : ${user}"
-echo -e "IP          : ${MYIP}"
-echo -e "Hostname    : ${domain}"
+echo -e "Remarks     : ${user}"
+echo -e "IP/Host     : ${MYIP}"
+echo -e "Address     : ${domain}"
 echo -e "Port TLS    : ${tls}"
 echo -e "User ID     : ${uuid}"
 echo -e "Alter ID    : 0"
