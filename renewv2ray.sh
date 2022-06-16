@@ -13,7 +13,7 @@ LIGHT='\033[0;37m'
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^#### " "/root/v2ray/config.json")
+NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/root/v2ray/config.json")
 	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 		clear
 		echo ""
@@ -26,7 +26,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#### " "/root/v2ray/config.json")
 	echo "Select the existing client you want to renew"
 	echo " Press CTRL+C to return"
 	echo -e "==============================="
-	grep -E "^#### " "/root/v2ray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
+	grep -E "^### " "/root/v2ray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
 	until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 		if [[ ${CLIENT_NUMBER} == '1' ]]; then
 			read -rp "Select one client [1]: " CLIENT_NUMBER
@@ -35,16 +35,16 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#### " "/root/v2ray/config.json")
 		fi
 	done
 read -p "Expired (Days): " masaaktif
-user=$(grep -E "^#### " "/root/v2ray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
-exp=$(grep -E "^#### " "/root/v2ray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^### " "/root/v2ray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+exp=$(grep -E "^### " "/root/v2ray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 now=$(date +%Y-%m-%d)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
 exp3=$(($exp2 + $masaaktif))
 exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
-sed -i "s/#### $user $exp/#### $user $exp4/g" /root/v2ray/config.json
-sed -i "s/#### $user $exp/#### $user $exp4/g" /root/v2ray/config.json
+sed -i "s/### $user $exp/### $user $exp4/g" /root/v2ray/config.json
+sed -i "s/### $user $exp/### $user $exp4/g" /root/v2ray/config.json
 systemctl restart xray.service
 service cron restart
 clear
