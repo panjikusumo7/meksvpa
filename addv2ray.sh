@@ -18,7 +18,7 @@ tls="443"
 nwln="\n"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
             read -rp "Username : " -e user
-            CLIENT_EXISTS=$(grep -w $user /etc/v2ray-agent/xray/conf/05_VMess_WS_inbounds.json | wc -l)
+            CLIENT_EXISTS=$(grep -w $user /root/v2ray/config.json | wc -l)
 
             if [[ ${CLIENT_EXISTS} == '1' ]]; then
                   echo ""
@@ -30,9 +30,9 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#xray-vmess-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'"' /etc/v2ray-agent/xray/conf/05_VMess_WS_inbounds.json
-cat>/etc/v2ray-agent/xray/conf/vmess-$user-tls.json<<EOF
+sed -i '/#xray-vmess-tls$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /root/v2ray/config.json
+cat>/root/v2ray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
       "ps": "${user}",
@@ -47,15 +47,15 @@ cat>/etc/v2ray-agent/xray/conf/vmess-$user-tls.json<<EOF
       "tls": "tls"
 }
 EOF
-cat>/etc/v2ray-agent/xray/conf/vmess-$user-cdn.json<<EOF
+cat>/root/v2ray/vmess-$user-cdn.json<<EOF
       {"v":"2","ps":"${user}","add":"www.digitalocean.com","aid":"0","port":"443","type":"none","net":"ws","path":"/luminemyid","host":"${domain}","id":"${uuid}","tls":"tls"}
 EOF
 vmess_base641=$( base64 -w 0 <<< $vmess_json1)
 vmess_base642=$( base64 -w 0 <<< $vmess_json2)
-xrayv2ray1="vmess://$(base64 -w 0 /etc/v2ray-agent/xray/conf/vmess-$user-tls.json)"
-xrayv2ray2="vmess://$(base64 -w 0 /etc/v2ray-agent/xray/conf/vmess-$user-cdn.json)"
-rm -rf /etc/v2ray-agent/xray/conf/vmess-$user-tls.json
-rm -rf /etc/v2ray-agent/xray/conf/vmess-$user-cdn.json
+xrayv2ray1="vmess://$(base64 -w 0 /root/v2ray/vmess-$user-tls.json)"
+xrayv2ray2="vmess://$(base64 -w 0 /root/v2ray/vmess-$user-cdn.json)"
+rm -rf /root/v2ray/vmess-$user-tls.json
+rm -rf /root/v2ray/vmess-$user-cdn.json
 systemctl restart xray.service
 service cron restart
 clear
