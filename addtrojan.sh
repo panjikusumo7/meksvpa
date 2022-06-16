@@ -33,7 +33,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#xray-trojan$/a\### '"$user $exp"'\
+sed -i '/#xray-trojan$/a\#@# '"$user $exp"'\
 },{"password": "'""$user""'","email": "'""$user""'"' /root/v2ray/config.json
 systemctl restart xray.service
 trojanlink="trojan://${user}@${domain}:${tr}?allowInsecure=1&sni=mobile.youtube.com&alpn=h2#${user}_TROJAN-GFW"
