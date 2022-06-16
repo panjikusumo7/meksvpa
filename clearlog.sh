@@ -18,6 +18,12 @@ do
 echo "$log clear"
 echo > $log
 done
+data=(`find /root/ -name *.log`);
+for log in "${data[@]}"
+do
+echo "$log clear"
+echo > $log
+done
 data=(`find /var/log/ -name *.err`);
 for log in "${data[@]}"
 do
@@ -34,4 +40,4 @@ echo > /var/log/syslog
 echo > /var/log/btmp
 echo > /var/log/messages
 echo > /var/log/debug
-echo -e "By Akbar Maulana"
+echo -e "Lumine Host"
