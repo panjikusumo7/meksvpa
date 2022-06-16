@@ -41,7 +41,7 @@ cat>/root/v2ray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "/luminemyid",
+      "path": "/lumine",
       "type": "none",
       "host": "",
       "tls": "tls"
@@ -69,7 +69,7 @@ echo -e "User ID     : ${uuid}"
 echo -e "Alter ID    : 0"
 echo -e "Security    : auto"
 echo -e "Network     : ws"
-echo -e "Path        : /luminemyid"
+echo -e "Path        : /lumine"
 echo -e "Created     : $hariini"
 echo -e "Expired     : $exp"
 echo -e ${nwln}
