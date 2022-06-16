@@ -16,7 +16,7 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 echo "Checking VPS"
 clear
 echo -n > /tmp/other.txt
-data=( `cat /root/v2ray/config.json | grep '^###' | cut -d ' ' -f 2`);
+data=( `cat /root/v2ray/config.json | grep '^#@#' | cut -d ' ' -f 2`);
 echo "-----------------------------------------";
 echo "---------=[ Trojan User Login ]=---------";
 echo "-----------------------------------------";
