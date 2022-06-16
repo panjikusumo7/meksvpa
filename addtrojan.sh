@@ -12,7 +12,6 @@ LIGHT='\033[0;37m'
 # ==========================================
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
-echo "Checking VPS"
 clear
 source /var/lib/lumine/ipvps.conf
 if [[ "$IP" = "" ]]; then
@@ -23,7 +22,7 @@ fi
 tr="443"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
-		user_EXISTS=$(grep -w $user /etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json | wc -l)
+		user_EXISTS=$(grep -w $user /root/v2ray/config.json | wc -l)
 
 		if [[ ${user_EXISTS} == '1' ]]; then
 			echo ""
@@ -35,7 +34,7 @@ read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#xray-trojan$/a\### '"$user $exp"'\
-},{"password": "'""$user""'","email": "'""$user""'"' /etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json
+},{"password": "'""$user""'","email": "'""$user""'"' /root/v2ray/config.json
 systemctl restart xray.service
 trojanlink="trojan://${user}@${domain}:${tr}?allowInsecure=1&sni=mobile.youtube.com&alpn=h2#${user}_TROJAN-GFW"
 service cron restart
