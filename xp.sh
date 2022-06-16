@@ -12,30 +12,30 @@ LIGHT='\033[0;37m'
 # ==========================================
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
-data=( `cat /etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json | grep '^###' | cut -d ' ' -f 2`);
+data=( `cat /root/v2ray/config.json | grep '^###' | cut -d ' ' -f 2`);
 now=`date +"%Y-%m-%d"`
 for user in "${data[@]}"
 do
-exp=$(grep -w "^### $user" "/etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json" | cut -d ' ' -f 3)
+exp=$(grep -w "^### $user" "/root/v2ray/config.json" | cut -d ' ' -f 3)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
 if [[ "$exp2" = "0" ]]; then
-sed -i "/^### $user $exp/,/^},{/d" /etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json
+sed -i "/^### $user $exp/,/^},{/d" /root/v2ray/config.json
 fi
 done
 systemctl restart xray.service
-data=( `cat /etc/v2ray-agent/xray/conf/05_VMess_WS_inbounds.json | grep '^###' | cut -d ' ' -f 2`);
+data=( `cat /root/v2ray/config.json | grep '^####' | cut -d ' ' -f 2`);
 now=`date +"%Y-%m-%d"`
 for user in "${data[@]}"
 do
-exp=$(grep -w "^### $user" "/etc/v2ray-agent/xray/conf/05_VMess_WS_inbounds.json" | cut -d ' ' -f 3)
+exp=$(grep -w "^#### $user" "/root/v2ray/config.json" | cut -d ' ' -f 3)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
 if [[ "$exp2" = "0" ]]; then
-sed -i "/^### $user $exp/,/^},{/d" /etc/v2ray-agent/xray/conf/05_VMess_WS_inbounds.json
-rm -f /etc/v2ray-agent/xray/conf/vmess-$user-tls.json /etc/v2ray-agent/xray/conf/vmess-$user-cdn.json
+sed -i "/^#### $user $exp/,/^},{/d" /root/v2ray/config.json
+rm -f /root/v2ray/vmess-$user-tls.json /root/v2ray/vmess-$user-cdn.json
 fi
 done
 systemctl restart xray.service
