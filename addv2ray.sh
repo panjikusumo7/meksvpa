@@ -30,7 +30,7 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#xray-vmess-tls$/a\#### '"$user $exp"'\
+sed -i '/#xray-vmess-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /root/v2ray/config.json
 cat>/root/v2ray/vmess-$user-tls.json<<EOF
       {
