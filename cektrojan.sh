@@ -16,7 +16,7 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 echo "Checking VPS"
 clear
 echo -n > /tmp/other.txt
-data=( `cat /etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json | grep '^###' | cut -d ' ' -f 2`);
+data=( `cat /root/v2ray/config.json | grep '^###' | cut -d ' ' -f 2`);
 echo "-----------------------------------------";
 echo "---------=[ Trojan User Login ]=---------";
 echo "-----------------------------------------";
@@ -29,7 +29,7 @@ echo -n > /tmp/iptrojan.txt
 data2=( `netstat -anp | grep ESTABLISHED | grep tcp6 | grep xray | awk '{print $5}' | cut -d: -f1 | sort | uniq`);
 for ip in "${data2[@]}"
 do
-jum=$(cat /etc/v2ray-agent/xray/access.log | grep -w $akun | awk '{print $3}' | cut -d: -f1 | grep -w $ip | sort | uniq)
+jum=$(cat /root/v2ray-access.log | grep -w $akun | awk '{print $3}' | cut -d: -f1 | grep -w $ip | sort | uniq)
 if [[ "$jum" = "$ip" ]]; then
 echo "$jum" >> /tmp/iptrojan.txt
 else
